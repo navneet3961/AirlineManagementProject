@@ -1,6 +1,7 @@
 const express = require('express');
 const CityController = require('../../controllers/city-controller');
 const FlightController = require('../../controllers/flight-controller');
+const AirportController = require('../../controllers/airport-controller');
 const router = express.Router();
 
 // API for cities
@@ -14,5 +15,10 @@ router.get('/city', CityController.getAll);
 router.post('/flight', FlightController.create);
 router.get('/flight/:id', FlightController.get);
 router.get('/flight', FlightController.getAll);
+
+// API for airports
+router.post('/airport', AirportController.create);
+router.get('/airport/:id', AirportController.get);
+router.get('/airport', AirportController.getAll);
 
 module.exports = router;
