@@ -5,15 +5,41 @@ const Helper = require("../utils/helper");
 const flightrepository = new FlightRepository();
 
 class FlightService {
+    #filterCreateDate(data) {
+        let newData = {};
+
+        if (data.flightNumber)
+            newData.flightNumber = data.flightNumber;
+        if (data.airplaneId)
+            newData.airplaneId = data.airplaneId;
+        if (
+            data.departureAirportId)
+            newData.departureAirportId = data.departureAirportId;
+        if (
+            data.arrivalAirportId)
+            newData.arrivalAirportId = data.arrivalAirportId;
+        if (
+            data.departureTime)
+            newData.departureTime = data.departureTime;
+        if (
+            data.arrivalTime)
+            newData.arrivalTime = data.arrivalTime;
+        if (
+            data.price)
+            newData.price = data.price;
+
+        return newData;
+    }
+
     async createFlight(data) {
         try {
-            if (!Helper.compareTime(data.arrivalTime, data.departureTime)) {
-                console.log("Time comparison issue");
+            if (Helper.compareTime(data.arrivalTime, data.departureTime)) {
                 throw "Arrival Time cannot be greater than Departure Time";
             }
             const airplaneRepository = new AirplaneRepository();
             const airplane = await airplaneRepository.getAirplane(data.airplaneId);
 
+            data = this.#filterCreateDate(data);
             data = { ...data, "totalSeats": airplane.capacity };
             const flight = await flightrepository.createFlight(data);
             return flight;
