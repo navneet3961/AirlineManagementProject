@@ -21,6 +21,7 @@ router.get('/city', CityController.getAll);
 router.post('/flight', FlightMiddlewares.validateCreateFlight, FlightController.create);
 router.get('/flight/:id', FlightController.get);
 router.get('/flight', FlightController.getAll);
+router.patch('/flight/:id', FlightController.update);
 
 // API for airports
 router.post('/airport', AirportController.create);
